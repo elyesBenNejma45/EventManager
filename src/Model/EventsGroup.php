@@ -6,6 +6,13 @@ use Iterator;
 
 class EventsGroup implements Iterator
 {
+    private $pos = 0;
+    private $array = array();
+
+    public function __construct($events) {
+        $this->pos = 0;
+        $this->array= $events;
+    }
 
     /**
      * Return the current element
@@ -16,6 +23,8 @@ class EventsGroup implements Iterator
     public function current()
     {
         // TODO: Implement current() method.
+        return $this->array[$this->pos];
+
     }
 
     /**
@@ -27,6 +36,7 @@ class EventsGroup implements Iterator
     public function next()
     {
         // TODO: Implement next() method.
+        ++$this->pos;
     }
 
     /**
@@ -38,6 +48,7 @@ class EventsGroup implements Iterator
     public function key()
     {
         // TODO: Implement key() method.
+        return $this->pos;
     }
 
     /**
@@ -50,6 +61,7 @@ class EventsGroup implements Iterator
     public function valid()
     {
         // TODO: Implement valid() method.
+        return isset($this->array[$this->pos]);
     }
 
     /**
@@ -61,5 +73,7 @@ class EventsGroup implements Iterator
     public function rewind()
     {
         // TODO: Implement rewind() method.
+        $this->pos = 0;
+
     }
 }
