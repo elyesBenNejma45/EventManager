@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * OutlookEvent
  *
- * @ORM\Table(name="outlook_event")
+ * @ORM\Table(name="outlook_event", indexes={@ORM\Index(name="FK_1CCAD9675E9E89CB", columns={"location"})})
  * @ORM\Entity
  */
 class OutlookEvent
@@ -20,13 +20,6 @@ class OutlookEvent
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="location", type="integer", nullable=false)
-     */
-    private $location = '0';
 
     /**
      * @var \DateTime|null
@@ -49,21 +42,19 @@ class OutlookEvent
      */
     private $type;
 
+    /**
+     * @var Location
+     *
+     * @ORM\ManyToOne(targetEntity="Location")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="location", referencedColumnName="id")
+     * })
+     */
+    private $location;
+
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getLocation(): ?int
-    {
-        return $this->location;
-    }
-
-    public function setLocation(int $location): self
-    {
-        $this->location = $location;
-
-        return $this;
     }
 
     public function getStart(): ?\DateTimeInterface
@@ -98,6 +89,18 @@ class OutlookEvent
     public function setType(?string $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getLocation(): ?Location
+    {
+        return $this->location;
+    }
+
+    public function setLocation(?Location $location): self
+    {
+        $this->location = $location;
 
         return $this;
     }

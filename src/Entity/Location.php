@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Location
  *
- * @ORM\Table(name="location")
+ * @ORM\Table(name="location", indexes={@ORM\Index(name="FK_5E9E89CBA393D2FB", columns={"state"})})
  * @ORM\Entity
  */
 class Location
@@ -26,14 +26,14 @@ class Location
      *
      * @ORM\Column(name="hidden", type="boolean", nullable=false)
      */
-    private $hidden = '0';
+    private $hidden;
 
     /**
      * @var bool|null
      *
      * @ORM\Column(name="events_cannot_be_reserved", type="boolean", nullable=true)
      */
-    private $eventsCannotBeReserved = '0';
+    private $eventsCannotBeReserved;
 
     /**
      * @var int|null
@@ -41,13 +41,6 @@ class Location
      * @ORM\Column(name="parent", type="integer", nullable=true, options={"comment"="sortable"})
      */
     private $parent;
-
-    /**
-     * @var int|null
-     *
-     * @ORM\Column(name="state", type="integer", nullable=true, options={"comment"="sortable"})
-     */
-    private $state;
 
     /**
      * @var string|null
@@ -208,14 +201,14 @@ class Location
      *
      * @ORM\Column(name="is_the_home_learn_location", type="boolean", nullable=false)
      */
-    private $isTheHomeLearnLocation = '0';
+    private $isTheHomeLearnLocation;
 
     /**
      * @var bool|null
      *
      * @ORM\Column(name="is_akademie", type="boolean", nullable=true)
      */
-    private $isAkademie = '0';
+    private $isAkademie;
 
     /**
      * @var bool|null
@@ -237,6 +230,16 @@ class Location
      * @ORM\Column(name="updated", type="datetime", nullable=false, options={"default"="CURRENT_TIMESTAMP"})
      */
     private $updated = 'CURRENT_TIMESTAMP';
+
+    /**
+     * @var State
+     *
+     * @ORM\ManyToOne(targetEntity="State")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="state", referencedColumnName="id")
+     * })
+     */
+    private $state;
 
     public function getId(): ?int
     {
@@ -275,18 +278,6 @@ class Location
     public function setParent(?int $parent): self
     {
         $this->parent = $parent;
-
-        return $this;
-    }
-
-    public function getState(): ?int
-    {
-        return $this->state;
-    }
-
-    public function setState(?int $state): self
-    {
-        $this->state = $state;
 
         return $this;
     }
@@ -611,6 +602,18 @@ class Location
     public function setUpdated(\DateTimeInterface $updated): self
     {
         $this->updated = $updated;
+
+        return $this;
+    }
+
+    public function getState(): ?State
+    {
+        return $this->state;
+    }
+
+    public function setState(?State $state): self
+    {
+        $this->state = $state;
 
         return $this;
     }
