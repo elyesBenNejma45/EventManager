@@ -31,11 +31,11 @@ class EventsGroupTest extends TestCase
         $this->assertEquals(1,$counter);
     }
 
-//    function testWhile() {
-//        $eventGroup = new EventsGroup([]);
-//        while($eventGroup->valid()){
-//            $event = $eventGroup->current();
-//            $eventGroup->next();
-//        }
-//    }
+    function testWhile() {
+        $eventGroup = new EventsGroup([]);
+        while($eventGroup->valid()){
+            $event = $eventGroup->current();
+            $eventGroup->next();
+        }
+    }
 }

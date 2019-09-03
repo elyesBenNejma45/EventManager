@@ -2,6 +2,9 @@
 
 
 namespace App\Model;
+use App\Entity\OutlookEvent;
+use App\Repository\OutlookEventRepository;
+use Doctrine\ORM\EntityRepository;
 use Iterator;
 
 class EventsGroup implements Iterator
@@ -76,4 +79,18 @@ class EventsGroup implements Iterator
         $this->pos = 0;
 
     }
+
+    private $filters = array();
+
+    public function addFilter($key,$value)
+    {
+        $this->filters[$key][] = $value;
+    }
+
+    public function load(OutlookEventRepository $repository)
+    {
+        // $this->filters = array('start' => $now, 'location' => 1)
+        $this->array = $repository->filterSafe($this->filters);
+    }
+
 }
