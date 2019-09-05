@@ -3,13 +3,58 @@
 {% block title %}Hello OutlookEventController!{% endblock %}
  {% block stylesheets %}
      <link href="{{ asset('build/app.css') }}" type="text/css" rel="stylesheet" />
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
  {% endblock %}
 {% block body %}
     <section>
         <!--for demo wrap-->
-        <h1>Fixed Table header</h1>
+        <h1>Upcoming events</h1>
+        <form action="">
+            <div class="row">
+                <div class="col-3">
+                    <div class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Location</span>
+                        </div>
+                        <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                               name="location" value="">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">start</span>
+                        </div>
+                        <input type="datetime-local" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                               name="start" value="">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">end</span>
+                        </div>
+                        <input type="datetime-local" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                               name="end" value="">
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Type</span>
+                        </div>
+                        <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                               name="type" value="">
+                    </div>
+                </div>
+                <div class="col-1">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+        </form>
         <div class="tbl-header">
-            <table cellpadding="0" cellspacing="0" border="0">
+                    <table cellpadding="0" cellspacing="0" border="0">
                 <thead>
                 <tr>
                     <th>location</th>
@@ -25,32 +70,32 @@
                 <tbody>
             <tr>
                  {% for  event in outlookEvents %}
+                {% if holiday %}
+                    <div style="color: red">
                 <td>
                     {{ event.location.title }}
                 </td>
+                {% elseif holiday == false%}
                 <td>
-                    {{ event.start|date("m/d/Y") }}
+                    {{ event.location.title }}
+                </td>
+                {% endif %}
+                <td>
+                    {{ event.start|date("Y-m-d H:i") }}
                 </td>
                 <td>
-                    {{ event.end|date("m/d/Y") }}
+                    {{ event.end|date("Y-m-d H:i") }}
                 </td>
                 <td>
                     {{ event.type }}
                 </td>
+                    </div>
             </tr>
                 {% endfor %}
                 </tbody>
             </table>
         </div>
     </section>
-
-
-    <!-- follow me template -->
-    <div class="made-with-love">
-        Made with
-        <i>♥</i> by
-        <a target="_blank" href="https://codepen.io/nikhil8krishnan">Nikhil Krishnan</a>
-    </div>
 {% endblock %}
 {% block javascripts %}
     <script src="{{ asset('build/app.js') }}"></script>

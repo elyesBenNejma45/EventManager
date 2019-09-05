@@ -63,7 +63,7 @@ class OutlookEventRepository extends ServiceEntityRepository
         }
 
         // Separate by AND delimiter if there are more than 1 pair
-        $condition = implode(' AND ', $condition);
+        $condition = $condition.implode(' AND ', $condition);
         // Return prepared string:
         $dql = "SELECT * FROM outlookEvent WHERE {$condition}";
         $query = $this->getEntityManager()->createQuery($dql);
